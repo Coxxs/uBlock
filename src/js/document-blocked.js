@@ -42,11 +42,13 @@ const urlToFragment = raw => {
         const fragment = new DocumentFragment();
         const url = new URL(raw);
         const hn = url.hostname;
-        const i = raw.indexOf(hn);
-        const b = document.createElement('b');
-        b.append(hn);
-        fragment.append(raw.slice(0,i), b, raw.slice(i+hn.length));
-        return fragment;
+        const i = raw.toLowerCase().indexOf(hn);
+        if ( i !== -1 ) {
+            const b = document.createElement('b');
+            b.append(raw.slice(i, i+hn.length));
+            fragment.append(raw.slice(0,i), b, raw.slice(i+hn.length));
+            return fragment;
+        }
     } catch {
     }
     return raw;
